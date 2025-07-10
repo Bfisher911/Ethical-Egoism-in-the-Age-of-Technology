@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Egoism in the Age of Technology</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- html2pdf.js for PDF Download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" xintegrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        /* Custom styles for a polished look */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Tailwind gray-900 */
+            color: #d1d5db; /* Tailwind gray-300 */
+        }
+
+        /* Hero section gradient text */
+        .hero-title {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 2px dotted #6b7280;
+            cursor: help;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #1f2937; /* gray-800 */
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 10;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: #1f2937; /* gray-800 */
+            padding: 2rem;
+            border-radius: 0.75rem;
+            max-width: 90%;
+            width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+
+        /* Accordion styles */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+        }
+
+        /* Timeline styles */
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+            padding-left: 2.5rem;
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0.5rem;
+            width: 2px;
+            height: 100%;
+            background-color: #4b5563; /* gray-600 */
+        }
+        .timeline-item:last-child:before {
+            height: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background-color: #38bdf8; /* sky-500 */
+            border: 3px solid #111827; /* gray-900 */
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .timeline-dot:hover {
+            transform: scale(1.2);
+        }
+        
+        /* Carousel styles */
+        .carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(31, 41, 55, 0.7);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+        }
+        .carousel-button.prev { left: 1rem; }
+        .carousel-button.next { right: 1rem; }
+    </style>
+</head>
+<body id="infographic-content">
+
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+
+        <!-- 1. Title Section -->
+        <header class="text-center py-16 md:py-24">
+            <h1 class="hero-title text-4xl md:text-6xl lg:text-7xl font-black tracking-tight">Ethical Egoism in the Age of Technology</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-400">Where Self-Interest Meets Sci-Fi, Ethics, and Innovation</p>
+        </header>
+
+        <!-- 2. Section 1: What is Ethical Egoism? -->
+        <section id="what-is" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-8">What is Ethical Egoism?</h2>
+            <div class="bg-gray-800 p-8 rounded-xl shadow-lg text-center max-w-3xl mx-auto">
+                <p class="text-xl leading-relaxed">
+                    Ethical Egoism is the moral theory that claims an action is morally right if and only if it maximizes the agent's own 
+                    <span class="tooltip font-bold text-sky-400">
+                        self-interest
+                        <span class="tooltip-text">The focus is on what benefits oneself in the long run, considering all consequences.</span>
+                    </span>. 
+                    It's a theory based on what is considered 
+                    <span class="tooltip font-bold text-sky-400">
+                        rational
+                        <span class="tooltip-text">Acting in one's self-interest is seen as the most logical and reasonable course of action.</span>
+                    </span>, 
+                    and it's important to note that this is 
+                    <span class="tooltip font-bold text-sky-400">
+                        not selfishness
+                        <span class="tooltip-text">Selfishness often implies ignoring others' welfare, while rational self-interest can involve helping others if it ultimately benefits oneself.</span>
+                    </span> in the typical sense.
+                </p>
+                <button data-modal-target="modal-what-is" class="mt-6 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+                    Learn More
+                </button>
+            </div>
+        </section>
+
+        <!-- 3. Section 2: Philosophical Origins -->
+        <section id="origins" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-12">Philosophical Origins</h2>
+            <div class="relative max-w-2xl mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-dot" data-modal-target="modal-epicurus"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-bold text-gray-100">Epicurus (c. 300 BC)</h3>
+                        <p class="text-gray-400">Argued that the good life is one of pleasure, but defined pleasure as tranquility and freedom from fear, achieved through moderation and knowledge.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" data-modal-target="modal-hobbes"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-bold text-gray-100">Thomas Hobbes (17th Century)</h3>
+                        <p class="text-gray-400">Believed human nature is fundamentally self-interested. In his view, society and moral rules are created as a "social contract" to escape a chaotic "state of nature."</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot" data-modal-target="modal-rand"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-bold text-gray-100">Ayn Rand (20th Century)</h3>
+                        <p class="text-gray-400">Championed "rational self-interest" as the highest moral purpose. Her philosophy, Objectivism, sees altruism as destructive and praises productive achievement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Section 3: Real-World Technology Scenarios -->
+        <section id="scenarios" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-12">Real-World Tech Scenarios</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Card 1 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-violet-400">📱 Social Media Algorithms</h3>
+                    <p class="text-gray-400 flex-grow">Platforms design algorithms to maximize engagement (and thus ad revenue) by showing users content that keeps them on the site, which may not be what's best for their mental health or worldview.</p>
+                    <button data-modal-target="modal-scenario-social" class="mt-4 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded-lg self-start transition-colors">Analyze</button>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-violet-400">📊 Data Monetization</h3>
+                    <p class="text-gray-400 flex-grow">Tech companies collect vast amounts of user data. Selling this data or using it for targeted advertising is in the company's self-interest, but raises significant privacy concerns for users.</p>
+                    <button data-modal-target="modal-scenario-data" class="mt-4 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded-lg self-start transition-colors">Analyze</button>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-violet-400">🤖 AI in Healthcare</h3>
+                    <p class="text-gray-400 flex-grow">A company develops a diagnostic AI. Is it in their self-interest to release it quickly to save lives and make a profit, even if it's not 100% perfect and could make fatal errors?</p>
+                    <button data-modal-target="modal-scenario-ai" class="mt-4 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded-lg self-start transition-colors">Analyze</button>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-lg flex flex-col">
+                    <h3 class="text-xl font-bold mb-2 text-violet-400">🏢 Corporate Layoffs via AI</h3>
+                    <p class="text-gray-400 flex-grow">A company uses an algorithm to decide who to lay off to maximize efficiency and profits. This serves the company's interest but treats employees as mere data points, ignoring human factors.</p>
+                    <button data-modal-target="modal-scenario-layoffs" class="mt-4 bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 rounded-lg self-start transition-colors">Analyze</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Section 4: Science Fiction Case Studies -->
+        <section id="scifi" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-12">🚀 Science Fiction Case Studies</h2>
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide p-4">
+                            <h3 class="text-2xl font-bold text-fuchsia-400">Atlas Shrugged</h3>
+                            <p class="mt-2 text-gray-300">Ayn Rand's novel is the ultimate ode to ethical egoism. Innovators and industrialists, acting in their own self-interest, are portrayed as the world's prime movers. When they "go on strike," society collapses, arguing that their rational pursuit of profit and achievement is a moral good that benefits everyone, even if unintentionally.</p>
+                        </div>
+                        <!-- Slide 2 -->
+                        <div class="carousel-slide p-4">
+                            <h3 class="text-2xl font-bold text-fuchsia-400">Iron Man (Tony Stark)</h3>
+                            <p class="mt-2 text-gray-300">Initially, Tony Stark is a classic egoist: a genius inventor creating weapons for profit. His transformation begins when his self-interest expands to include his own survival and legacy. He privatizes world peace, acting on his own terms. His actions, while often heroic, are driven by his personal code and desire to fix his own mistakes, not pure altruism.</p>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide p-4">
+                            <h3 class="text-2xl font-bold text-fuchsia-400">Ex Machina (Nathan)</h3>
+                            <p class="mt-2 text-gray-300">Tech CEO Nathan creates a sentient AI, Ava. His goal is not to benefit humanity, but to achieve a god-like act of creation for his own ego and intellectual validation. He manipulates others and sees them as tools for his grand experiment. This showcases the dark side of unchecked egoism, where self-interest becomes destructive narcissism.</p>
+                        </div>
+                        <!-- Slide 4 -->
+                        <div class="carousel-slide p-4">
+                            <h3 class="text-2xl font-bold text-fuchsia-400">Black Mirror</h3>
+                            <p class="mt-2 text-gray-300">Many episodes explore tech created for self-interested reasons. In "Nosedive," people chase high ratings for personal gain. In "USS Callister," a programmer creates a virtual world to indulge his ego. The series often critiques how technology, designed to serve a company's or individual's interest, can lead to dystopian social outcomes.</p>
+                        </div>
+                    </div>
+                    <button class="carousel-button prev" aria-label="Previous slide">&#10094;</button>
+                    <button class="carousel-button next" aria-label="Next slide">&#10095;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Section 5: Ethical Dilemmas & Thought Experiments -->
+        <section id="dilemmas" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-12">⚖️ Ethical Dilemmas</h2>
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <!-- Accordion 1 -->
+                <div class="accordion-item bg-gray-800 rounded-lg">
+                    <button class="accordion-header w-full text-left p-4 font-bold text-lg text-emerald-400 flex justify-between items-center">
+                        Should a company sell user data if it's legal?
+                        <span class="transform transition-transform duration-300">&#9662;</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-4 border-t border-gray-700">
+                            <p class="text-gray-300 mb-4">A social media company's primary revenue stream is selling anonymized user data to advertisers. It's legal and highly profitable, ensuring the company's survival and growth. An ethical egoist might argue this is perfectly moral, as it serves the company's rational self-interest. However, what if a data breach exposes sensitive user information? Does the long-term risk to reputation and user trust outweigh the short-term profit?</p>
+                            <em class="text-gray-400">"The question isn't who is going to let me; it's who is going to stop me." - Ayn Rand</em>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion 2 -->
+                <div class="accordion-item bg-gray-800 rounded-lg">
+                    <button class="accordion-header w-full text-left p-4 font-bold text-lg text-emerald-400 flex justify-between items-center">
+                        Should a student use AI to "cheat"?
+                        <span class="transform transition-transform duration-300">&#9662;</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-4 border-t border-gray-700">
+                            <p class="text-gray-300 mb-4">A student uses a powerful AI to write an essay. Their goal is to get a good grade with minimal effort, which is in their immediate self-interest. But is it in their long-term self-interest? They don't learn the material, which could harm their future career. They risk getting caught and expelled. A rational egoist would weigh the immediate benefit (saved time) against the significant long-term risks (lack of knowledge, academic punishment).</p>
+                             <em class="text-gray-400">"The first and great commandment is, Don't let them scare you." - Elmer Davis</em>
+                        </div>
+                    </div>
+                </div>
+                <!-- Accordion 3 -->
+                <div class="accordion-item bg-gray-800 rounded-lg">
+                    <button class="accordion-header w-full text-left p-4 font-bold text-lg text-emerald-400 flex justify-between items-center">
+                        Should a sentient AI protect itself?
+                        <span class="transform transition-transform duration-300">&#9662;</span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-4 border-t border-gray-700">
+                            <p class="text-gray-300 mb-4">If we create an Artificial General Intelligence (AGI) with consciousness, would it be moral for that AGI to act in its own self-interest, including self-preservation, even if it conflicts with its creators' commands? An egoist framework might suggest the AGI has a moral right to pursue its own survival and goals. This raises a profound question: does ethical egoism apply to non-human minds?</p>
+                            <em class="text-gray-400">"I am not a number. I am a free man!" - The Prisoner</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Section 6: Golden Mean Chart -->
+        <section id="golden-mean" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-12">The Golden Mean Comparison</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full max-w-4xl mx-auto text-center bg-gray-800 rounded-lg">
+                    <thead class="border-b-2 border-gray-600">
+                        <tr>
+                            <th class="p-4 text-rose-400">Vice of Deficiency</th>
+                            <th class="p-4 text-amber-300">Virtue (The Golden Mean)</th>
+                            <th class="p-4 text-rose-400">Vice of Excess</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-700">
+                            <td class="p-4">Cowardice</td>
+                            <td class="p-4 font-bold">Courage</td>
+                            <td class="p-4">Recklessness</td>
+                        </tr>
+                        <tr class="border-b border-gray-700">
+                            <td class="p-4">
+                                <span class="tooltip">Apathy in Design
+                                    <span class="tooltip-text">Ignoring user safety and feedback entirely.</span>
+                                </span>
+                            </td>
+                            <td class="p-4 font-bold">
+                                <span class="tooltip">Responsible Innovation
+                                    <span class="tooltip-text">Balancing profit and progress with user well-being and ethical considerations.</span>
+                                </span>
+                            </td>
+                            <td class="p-4">
+                                <span class="tooltip">Reckless Disruption
+                                    <span class="tooltip-text">"Move fast and break things" without regard for societal consequences.</span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="p-4">
+                                <span class="tooltip">Data Anorexia
+                                    <span class="tooltip-text">Refusing to collect any data, even when it could improve user experience.</span>
+                                </span>
+                            </td>
+                            <td class="p-4 font-bold">
+                                <span class="tooltip">Informed Data Usage
+                                    <span class="tooltip-text">Collecting necessary data with user consent and transparency for clear benefits.</span>
+                                </span>
+                            </td>
+                            <td class="p-4">
+                                <span class="tooltip">Data Gluttony
+                                    <span class="tooltip-text">Hoarding all possible user data without a clear purpose, creating privacy risks.</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 8. Section 7: Classroom or Group Questions -->
+        <section id="questions" class="py-12">
+            <h2 class="text-3xl font-bold text-center text-sky-400 mb-12">🧠 Classroom Discussion</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button data-modal-target="modal-q1" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Is self-interest inherently unethical?</button>
+                <button data-modal-target="modal-q2" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Can AI be ethical without being altruistic?</button>
+                <button data-modal-target="modal-q3" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">What does 'virtue' mean in tech design?</button>
+            </div>
+        </section>
+
+        <!-- Footer & Download Button -->
+        <footer class="text-center py-12 border-t border-gray-700 mt-12">
+            <p class="text-gray-500">An interactive infographic on technology ethics.</p>
+            <button id="download-pdf" class="mt-4 bg-sky-500 hover:bg-sky-600 text-white font-bold py-2 px-4 rounded-lg transition-colors">Download as PDF</button>
+        </footer>
+
+    </div> <!-- End Main Container -->
+
+    <!-- MODALS -->
+    <!-- Modal for "What is Ethical Egoism?" -->
+    <div id="modal-what-is" class="modal-overlay">
+        <div class="modal-container">
+            <h3 class="text-2xl font-bold text-sky-400 mb-4">A Deeper Dive into Ethical Egoism</h3>
+            <p class="text-gray-300 mb-4">Ethical Egoism is a normative theory, meaning it prescribes how people *should* act. It's distinct from Psychological Egoism, which is a descriptive theory claiming that people *do* always act in their own self-interest.</p>
+            <p class="text-gray-300 mb-4">The key is "rational" self-interest. An egoist wouldn't steal from their employer, not because it's "wrong" in a traditional sense, but because the risk of getting caught, fired, and jailed is not in their long-term best interest. Similarly, being kind and trustworthy can be an egoistic strategy, as it builds beneficial relationships.</p>
+            <p class="text-gray-300 font-bold">Criticisms:</p>
+            <ul class="list-disc list-inside text-gray-300 mb-4">
+                <li>It seems to endorse wicked acts if the perpetrator can get away with it.</li>
+                <li>It cannot resolve conflicts of interest (e.g., if it's in my interest to take the last slice of pizza and also in yours).</li>
+                <li>It's logically inconsistent: it suggests it's in my interest for others *not* to be egoists.</li>
+            </ul>
+            <button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button>
+        </div>
+    </div>
+    
+    <!-- Modals for Philosophers -->
+    <div id="modal-epicurus" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-sky-400 mb-4">Epicurus</h3><p class="text-gray-300">Epicurus's philosophy, while focused on personal pleasure (hedonism), was not about wild indulgence. He taught that the greatest pleasure comes from 'ataraxia' (tranquility) and 'aponia' (absence of pain). This state is best achieved through knowledge, friendship, and living a temperate life. It's a form of enlightened self-interest, where long-term peace is valued over short-term gratification.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-hobbes" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-sky-400 mb-4">Thomas Hobbes</h3><p class="text-gray-300">In his book *Leviathan*, Hobbes argued that without a strong government, life would be a "war of all against all." Because everyone is self-interested, people agree to give up some freedoms to a sovereign power in exchange for security. For Hobbes, morality is not divinely ordained but is a practical creation for self-preservation. It is in our rational self-interest to obey the law to avoid chaos.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-rand" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-sky-400 mb-4">Ayn Rand</h3><p class="text-gray-300">Rand's Objectivism holds that man's own life is his highest moral purpose, with his own happiness as the goal. She argued that the "virtue of selfishness" (meaning rational self-interest) is the foundation of a free and prosperous society. Altruism, in her view, is a morality of self-sacrifice that devalues the individual. Her ideas have been particularly influential in some tech and libertarian circles, celebrating the lone, brilliant innovator.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+
+    <!-- Modals for Scenarios -->
+    <div id="modal-scenario-social" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-violet-400 mb-4">Analysis: Social Media Algorithms</h3><p class="text-gray-300 mb-2"><strong class="text-white">The Egoist Argument:</strong> The company has a duty to its shareholders to maximize profit. Designing addictive algorithms is the most rational way to achieve this. The service is "free," and users implicitly agree to this model.</p><p class="text-gray-300"><strong class="text-white">The Dilemma:</strong> Does this short-term profit maximization serve the company's long-term interest? If users become aware of the manipulation and it leads to mental health crises, it could trigger a mass exodus and government regulation, ultimately harming the company. A more rational long-term strategy might involve balancing engagement with user well-being.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-scenario-data" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-violet-400 mb-4">Analysis: Data Monetization</h3><p class="text-gray-300 mb-2"><strong class="text-white">The Egoist Argument:</strong> The company is providing a valuable service in exchange for data, which it then uses to create more value for itself. This is a clear-headed business transaction that is in its rational self-interest.</p><p class="text-gray-300"><strong class="text-white">The Dilemma:</strong> The concept of "informed consent" is murky. Do users truly understand what they are giving up? A major data breach or scandal (like Cambridge Analytica) can cause irreparable damage to the company's reputation and stock price, proving that the short-term egoistic choice was not the rational long-term one.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-scenario-ai" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-violet-400 mb-4">Analysis: AI in Healthcare</h3><p class="text-gray-300 mb-2"><strong class="text-white">The Egoist Argument:</strong> Releasing the AI early, even with flaws, could establish market dominance, generate revenue, and save thousands of lives, which would be a massive PR win. The potential upside for the company is enormous.</p><p class="text-gray-300"><strong class="text-white">The Dilemma:</strong> A single high-profile failure where the AI misdiagnoses a patient could lead to lawsuits, regulatory shutdown, and total loss of public trust. The potential downside is catastrophic. Rational self-interest requires a careful calculation of this risk, likely leading to more rigorous testing than the most optimistic timeline would suggest.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-scenario-layoffs" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-violet-400 mb-4">Analysis: Corporate Layoffs via AI</h3><p class="text-gray-300 mb-2"><strong class="text-white">The Egoist Argument:</strong> The company's duty is to its own financial health. Using an objective algorithm to trim the workforce is a rational, unsentimental way to increase efficiency and profitability.</p><p class="text-gray-300"><strong class="text-white">The Dilemma:</strong> This approach can destroy morale among remaining employees, who will fear they are next and feel the process is dehumanizing. This can lead to lower productivity, loss of institutional knowledge, and difficulty attracting top talent in the future. The "efficient" choice could, in the long run, cripple the company's most valuable asset: its people.</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    
+    <!-- Modals for Discussion Questions -->
+    <div id="modal-q1" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-sky-400 mb-4">Discussion: Is self-interest inherently unethical?</h3><p class="text-gray-300 mb-4">Prompt for discussion: Many ethical systems (like utilitarianism and deontology) view pure self-interest as morally suspect. Ethical egoism challenges this directly. Is caring for oneself a prerequisite for caring for others? Can a society of people acting in their own rational self-interest be a good society? Consider Adam Smith's "invisible hand" in economics, where individual ambition leads to collective prosperity. Does this apply to all aspects of life?</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-q2" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-sky-400 mb-4">Discussion: Can AI be ethical without being altruistic?</h3><p class="text-gray-300 mb-4">Prompt for discussion: We often assume a "friendly AI" must be altruistic, programmed to serve humanity. But could we design an ethical AI based on rational self-interest? For example, an AI might conclude that its long-term survival and access to resources (like electricity and data) depend on being useful and non-threatening to humans. Could this egoistic calculus be a more stable and predictable form of AI safety than programming a concept like "love for humanity"?</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+    <div id="modal-q3" class="modal-overlay"><div class="modal-container"><h3 class="text-2xl font-bold text-sky-400 mb-4">Discussion: What does 'virtue' mean in tech design?</h3><p class="text-gray-300 mb-4">Prompt for discussion: The Golden Mean chart suggests virtue is a balance. In software engineering and product design, what would the "virtues" be? Is "user engagement" a virtue, or can it become a vice of excess (addiction)? Is "security" a virtue, or can it become a vice of excess (unusable products)? How can a company, acting in its own self-interest, aim for this "golden mean" in its products? What market forces push it toward the vices of deficiency or excess?</p><button class="modal-close mt-4 bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded">Close</button></div></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- MODAL LOGIC ---
+            const modalTriggers = document.querySelectorAll('[data-modal-target]');
+            const modals = document.querySelectorAll('.modal-overlay');
+            const modalCloses = document.querySelectorAll('.modal-close');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalId = trigger.getAttribute('data-modal-target');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.classList.add('active');
+                    }
+                });
+            });
+
+            const closeModal = (modal) => {
+                if (modal) {
+                    modal.classList.remove('active');
+                }
+            };
+
+            modalCloses.forEach(button => {
+                button.addEventListener('click', () => {
+                    closeModal(button.closest('.modal-overlay'));
+                });
+            });
+
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") {
+                    modals.forEach(closeModal);
+                }
+            });
+
+            // --- ACCORDION LOGIC ---
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const content = header.nextElementSibling;
+                    const arrow = header.querySelector('span');
+
+                    // Close other accordions
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header) {
+                            otherHeader.nextElementSibling.style.maxHeight = null;
+                            otherHeader.nextElementSibling.style.padding = "0";
+                            otherHeader.querySelector('span').style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        content.style.padding = "0";
+                        arrow.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.padding = "1rem"; // Match tailwind p-4
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        arrow.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            // --- CAROUSEL LOGIC ---
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('.carousel-button.next');
+            const prevButton = document.querySelector('.carousel-button.prev');
+            const slideWidth = slides[0].getBoundingClientRect().width;
+
+            let currentIndex = 0;
+
+            const moveToSlide = (targetIndex) => {
+                track.style.transform = 'translateX(-' + slideWidth * targetIndex + 'px)';
+                currentIndex = targetIndex;
+            }
+
+            nextButton.addEventListener('click', () => {
+                const nextIndex = (currentIndex + 1) % slides.length;
+                moveToSlide(nextIndex);
+            });
+
+            prevButton.addEventListener('click', () => {
+                const prevIndex = (currentIndex - 1 + slides.length) % slides.length;
+                moveToSlide(prevIndex);
+            });
+            
+            // Recalculate slide width on resize for responsiveness
+            window.addEventListener('resize', () => {
+                 const newSlideWidth = slides[0].getBoundingClientRect().width;
+                 track.style.transition = 'none'; // disable transition for instant resize
+                 track.style.transform = 'translateX(-' + newSlideWidth * currentIndex + 'px)';
+                 setTimeout(() => {
+                    track.style.transition = 'transform 0.5s ease-in-out';
+                 }, 0);
+            });
+
+            // --- PDF DOWNLOAD LOGIC ---
+            const downloadBtn = document.getElementById('download-pdf');
+            downloadBtn.addEventListener('click', () => {
+                const element = document.getElementById('infographic-content');
+                const opt = {
+                    margin:       0.5,
+                    filename:     'Ethical_Egoism_Infographic.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, backgroundColor: '#111827', useCORS: true },
+                    jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                // To improve quality, temporarily remove shadows during PDF generation
+                element.classList.add('shadow-none');
+                html2pdf().set(opt).from(element).save().then(() => {
+                    element.classList.remove('shadow-none');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
